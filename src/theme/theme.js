@@ -4,7 +4,7 @@ export default {
     fontColor: 'rgba(0, 0, 0, 0.87)',
     whiteColor: '#ffffff',
     primaryColor: '#ff55a5',
-    secondaryColor: '#edeef3',
+    secondaryColor: '#28282d',
     greyColorOne: 'hsl(200, 25%, 96%)',
     greyColorTwo: 'hsl(200, 25%, 88%)',
 

@@ -56,6 +56,10 @@ const Style = createGlobalStyle`
         }
     }
 
+    p {
+        margin: 0;
+    }
+
     .wrapper {
         display: flex;
         flex-direction: column;

@@ -52,7 +52,7 @@ class Header extends Component {
                             <Grid item sm={9}>
                                 <HeaderRightContainer>
                                     <Search />
-                                    <Nav />
+                                    <Nav/>
                                 </HeaderRightContainer>
                             </Grid>
                         </Grid>
