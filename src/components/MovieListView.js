@@ -7,7 +7,7 @@ import Ripple from './style/Ripple';
 import cover from '../images/cover.jpg';
 import Title from './style/Title';
 import Paragraph from './style/Paragraph';
-import GridList from './GridList';
+import Menu  from './Menu';
 import Rating from './Rating';
 import Wrapper from './style/Wrapper';
 import Badge from './Badge';
@@ -32,7 +32,7 @@ const MovieListView = props => (
                 <Title small normalFont color="#ffffff">
                     I Dream in Another Language
                 </Title>
-                <GridList/>
+                <Menu />
                 <Wrapper style={{marginTop: '10px'}}>
                     <Rating number="8.2" />
                     <Badge />

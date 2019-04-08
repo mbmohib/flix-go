@@ -12,7 +12,7 @@ const ListViewWrapper = styled.div`
 
 const ListView = props => (
     <React.Fragment>
-        <SectionHeader />
+        <SectionHeader title="New items"/>
 
         <ListViewWrapper>
             <Container>

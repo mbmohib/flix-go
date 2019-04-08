@@ -6,7 +6,7 @@ import cover from '../images/cover.jpg';
 import Title from './style/Title';
 import Paragraph from './style/Paragraph';
 import Wrapper from './style/Wrapper';
-import GridList from './GridList';
+import Menu from './Menu';
 import Rating from './Rating';
 import Badge from './Badge';
 
@@ -40,13 +40,13 @@ const DetailsMovie = props => (
                 </Wrapper>
                 <Wrapper>
                     <p>Genre: </p>
-                    <GridList />
+                    <Menu />
                 </Wrapper>
                 <Paragraph medium>Release year: 2017</Paragraph>
                 <Paragraph medium>Running time: 120 min</Paragraph>
                 <Wrapper>
                     <p>Country: </p>
-                    <GridList />
+                    <Menu />
                 </Wrapper>
                 <Paragraph medium style={{ marginTop: '15px' }}>
                     It is a long established fact that a reader will be

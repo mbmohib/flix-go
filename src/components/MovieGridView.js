@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Ripple from './style/Ripple';
 import cover from '../images/cover.jpg';
 import Title from './style/Title';
-import GridList from './GridList';
+import Menu from './Menu';
 import Rating from './Rating';
 
 const MoviePrimaryWrapper = styled(Link)`
@@ -33,7 +33,7 @@ const MovieGridView = props => (
         >
             {props.title}
         </Title>
-        <GridList />
+        <Menu />
         <Rating number="7.2" />
     </MoviePrimaryWrapper>
 );

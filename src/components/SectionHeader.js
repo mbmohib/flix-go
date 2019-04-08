@@ -10,12 +10,15 @@ const SectionHeaderWrapper = styled.div`
     padding-bottom: 10px;
     box-shadow: ${props => props.theme.largeShadow};
     background: ${props => props.theme.secondaryColor};
+    border-top: 2px solid ${props => props.theme.primaryColor};
 `;
 
 const SectionHeader = props => (
     <SectionHeaderWrapper>
         <Container>
-            <Title style={{ marginBottom: '20px' }} color="#ffffff" highWeight>New items</Title>
+            <Title style={{ marginBottom: '20px' }} color="#ffffff" highWeight>
+                {props.title}
+            </Title>
             <Nav position="center"/>
         </Container>
     </SectionHeaderWrapper>

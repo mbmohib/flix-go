@@ -16,7 +16,6 @@ const HeroWrapper = styled.div`
         url(${heroBg});
     background-position: center center;
     background-size: cover;
-    border-bottom: 2px solid ${props => props.theme.primaryColor};
 `;
 
 const HeroContainer = styled.div`

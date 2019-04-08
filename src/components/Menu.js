@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const CategoryWrapper = styled.div`
+const MenuWrapper = styled.div`
     display: flex;
 `;
 
-const Category = styled.p`
+const MenuItem = styled.p`
     color: ${props => props.theme.primaryColor} !important;
     margin-right: 5px;
 
@@ -17,11 +17,11 @@ const Category = styled.p`
     }
 `;
 
-const Categories = props => (
-    <CategoryWrapper>
-        <Category>Action</Category>
-        <Category>Science</Category>
-    </CategoryWrapper>
+const Menu = props => (
+    <MenuWrapper>
+        <MenuItem>Action</MenuItem>
+        <MenuItem>Science</MenuItem>
+    </MenuWrapper>
 )
 
-export default Categories;
+export default Menu;
