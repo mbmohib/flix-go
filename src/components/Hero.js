@@ -82,7 +82,6 @@ class Hero extends Component {
                             transform="uppercase"
                             color="#ffffff"
                             highWeight
-                            style={{ marginLeft: '50px' }}
                         >
                             new items of this season
                         </Title>

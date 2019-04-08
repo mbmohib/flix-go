@@ -10,7 +10,8 @@ const oneLine = `
 const Title = styled.h1`
     font-family: ${props =>
         props.normalFont ? props.theme.normalFont : props.theme.titleFont};
-    font-size: ${props => props.small ? '1.3rem' : props.medium ? '1.5rem' : '2rem'};
+    font-size: ${props =>
+        props.small ? '1.3rem' : props.medium ? '1.5rem' : '2rem'};
     font-weight: ${props =>
         props.highWeight ? props.theme.highWeight : props.theme.lightWeight};
     text-align: ${props =>
@@ -19,7 +20,12 @@ const Title = styled.h1`
             : props.align === 'right'
             ? 'right'
             : 'left'};
-    color: ${props => (props.color ? props.color : props.theme.fontColor)};
+    color: ${props =>
+        props.color === 'white'
+            ? '#ffffff'
+            : props.color
+            ? props.color
+            : props.theme.fontColor};
     text-transform: ${props =>
         props.transform === 'uppercase'
             ? 'uppercase'

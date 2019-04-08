@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Hero from '../components/Hero';
 import ListView from '../components/ListView';
+import GridView from '../components/GridView';
 
 class Home extends Component {
     render() {
@@ -9,6 +10,7 @@ class Home extends Component {
             <React.Fragment>
                 <Hero />
                 <ListView />
+                <GridView />
             </React.Fragment>
         )
     }

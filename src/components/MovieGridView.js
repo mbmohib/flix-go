@@ -9,12 +9,14 @@ import Categories from './Categories';
 import Rating from './Rating';
 
 const MoviePrimaryWrapper = styled(Link)`
-    padding: 0 50px;
+    /* padding: 0 50px; */
     display: block;
 `;
 
 const MovieCover = styled.img`
     margin-bottom: ${props => props.theme.smallSpace};
+    width: 70%;
+    margin-right: auto;
 `;
 
 const MovieGridView = props => (
