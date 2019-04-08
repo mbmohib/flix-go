@@ -1,7 +1,7 @@
 export default {
     bodyColor: '#2b2b31',
     linkColor: '#0056b3',
-    fontColor: 'rgba(0, 0, 0, 0.87)',
+    fontColor: 'rgba(255,255,255,0.7)',
     whiteColor: '#ffffff',
     primaryColor: '#ff55a5',
     secondaryColor: '#28282d',

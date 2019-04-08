@@ -2,12 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 const CategoryWrapper = styled.div`
-    margin-top: ${props => props.theme.smallSpace};
     display: flex;
 `;
 
 const Category = styled.p`
-    color: ${props => props.theme.primaryColor};
+    color: ${props => props.theme.primaryColor} !important;
     margin-right: 5px;
 
     :first-child {

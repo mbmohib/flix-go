@@ -7,8 +7,10 @@ import Ripple from './style/Ripple';
 import cover from '../images/cover.jpg';
 import Title from './style/Title';
 import Paragraph from './style/Paragraph';
-import Categories from './Categories';
+import GridList from './GridList';
 import Rating from './Rating';
+import Wrapper from './style/Wrapper';
+import Badge from './Badge';
 
 const MovieListViewWrapper = styled.div``;
 
@@ -30,9 +32,12 @@ const MovieListView = props => (
                 <Title small normalFont color="#ffffff">
                     I Dream in Another Language
                 </Title>
-                <Categories />
-                <Rating number="8.2" />
-                <Paragraph color="#ffffff70" medium>
+                <GridList/>
+                <Wrapper style={{marginTop: '10px'}}>
+                    <Rating number="8.2" />
+                    <Badge />
+                </Wrapper>
+                <Paragraph medium>
                     It is a long established fact that a reader will be
                     distracted by the readable content of a page when looking at
                     its layout. readable content of a page when looking at

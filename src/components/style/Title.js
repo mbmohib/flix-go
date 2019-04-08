@@ -43,6 +43,7 @@ const Title = styled.h1`
                   ${oneLine}
               `
             : ''}
+    margin-bottom: 5px;
 `;
 
 export default Title;

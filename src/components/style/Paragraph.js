@@ -16,8 +16,7 @@ const Paragraph = styled.h2`
             ? props.color
             : props.theme.fontColor};
     line-height: 1.2;
-    word-spacing: 2px;
-    margin: 10px 0;
+    margin-bottom: 5px;
 `;
 
 export default Paragraph;

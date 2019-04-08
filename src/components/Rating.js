@@ -6,7 +6,6 @@ import { withStyles } from '@material-ui/core';
 const RatingWrapper = styled.div`
     display: flex;
     align-items: center;
-    margin-top: 3px;
 
     p {
         margin-left: 10px;
