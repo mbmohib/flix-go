@@ -15,7 +15,7 @@ const IframeWrapper = styled.div`
 
 const Iframe = props => (
     <IframeWrapper>
-        <iframe src="https://www.youtube.com/embed/9QbltzIUV6w"></iframe> 
+        <iframe src="https://www.youtube.com/embed/9QbltzIUV6w" title="trailer"></iframe> 
     </IframeWrapper>
 )
 

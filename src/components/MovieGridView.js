@@ -3,13 +3,11 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 import Ripple from './style/Ripple';
-import cover from '../images/cover.jpg';
 import Title from './style/Title';
 import Menu from './Menu';
 import Rating from './Rating';
 
 const MoviePrimaryWrapper = styled(Link)`
-    /* padding: 0 50px; */
     display: block;
 `;
 
@@ -20,9 +18,9 @@ const MovieCover = styled.img`
 `;
 
 const MovieGridView = props => (
-    <MoviePrimaryWrapper to="/12">
+    <MoviePrimaryWrapper to={`/${props.movie.id}`}>
         <Ripple>
-            <MovieCover src={cover} alt="" />
+            <MovieCover src={`https://image.tmdb.org/t/p/w500${props.movie.poster_path}`} alt="" />
         </Ripple>
         <Title 
             style={{ width: '80%' }}
@@ -31,10 +29,10 @@ const MovieGridView = props => (
             normalFont 
             oneLine
         >
-            {props.title}
+            {props.movie.title}
         </Title>
         <Menu />
-        <Rating number="7.2" />
+        <Rating number={props.movie.vote_average} />
     </MoviePrimaryWrapper>
 );
 

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import Hero from '../components/Hero';
-import ListView from '../components/ListView';
-import GridView from '../components/GridView';
+import ListView from './ListView';
+import GridView from './GridView';
 
 class Home extends Component {
     render() {

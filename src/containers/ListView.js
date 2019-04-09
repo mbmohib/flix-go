@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Grid } from '@material-ui/core';
 
-import SectionHeader from './SectionHeader';
-import MovieListView from './MovieListView';
-import Container from './style/Container';
+import SectionHeader from '../components/SectionHeader';
+import MovieListView from '../components/MovieListView';
+import Container from '../components/style/Container';
 
 const ListViewWrapper = styled.div`
     padding: 50px 0;
@@ -12,7 +12,7 @@ const ListViewWrapper = styled.div`
 
 const ListView = props => (
     <React.Fragment>
-        <SectionHeader title="New items"/>
+        <SectionHeader title="Highest Rated Movies of 2019"/>
 
         <ListViewWrapper>
             <Container>

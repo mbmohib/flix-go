@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Grid from '@material-ui/core/Grid';
+import { Link } from 'react-router-dom';
 
 import Container from './style/Container';
 import Logo from '../images/logo.svg';
@@ -46,7 +47,9 @@ class Header extends Component {
                         <Grid container>
                             <Grid item sm={3}>
                                 <LogoWrapper>
-                                    <img src={Logo} alt="FlixGo" />
+                                    <Link to="/">
+                                        <img src={Logo} alt="FlixGo" />
+                                    </Link>
                                 </LogoWrapper>
                             </Grid>
                             <Grid item sm={9}>

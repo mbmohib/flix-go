@@ -11,7 +11,7 @@ const AppRouter = () => (
         <Layout>            
             <Switch>
                 <Route path="/" component={Home} exact/>
-                <Route path="/details" component={Details} />
+                <Route path="/:id" component={Details} />
             </Switch>
         </Layout>
     </BrowserRouter>

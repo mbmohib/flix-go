@@ -1,6 +1,4 @@
 import { createMuiTheme } from '@material-ui/core/styles';
-import deepPurple from '@material-ui/core/colors/teal';
-import red from '@material-ui/core/colors/red';
 
 // All the following keys are optional.
 // We try our best to provide a great default value.
@@ -9,8 +7,12 @@ const materialTheme = createMuiTheme({
     primary: {
         main: '#ff55a5'
     },
-    secondary: deepPurple,
-    error: red,
+    secondary: {
+        main: '#28282d'
+    },
+    error: {
+        main: '#C0392B'
+    },
     // Used by `getContrastText()` to maximize the contrast between the background and
     // the text.
     contrastThreshold: 3,

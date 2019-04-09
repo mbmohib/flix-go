@@ -3,25 +3,25 @@ import styled from 'styled-components';
 import { Grid } from '@material-ui/core';
 
 import Container from './style/Container';
-import Iframe from './style/Iframe';
 import DetailsMovie from './DetailsMovie';
 
 const HeroDetailsWrapper = styled.div`
+    background-position: center center;
+    background-size: cover;
 `;
 
 const HeroDetails = props => (
-    <HeroDetailsWrapper>
+    <HeroDetailsWrapper style={{
+        backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url(https://image.tmdb.org/t/p/w500' + props.movie.backdrop_path + ')'
+    }}>
         <Container>
             <Grid container>
-                <Grid item sm={6}>
-                    <DetailsMovie />
-                </Grid>
-                <Grid item sm={6}>
-                    <Iframe />
+                <Grid item sm={8}>
+                    <DetailsMovie movie={props.movie} />
                 </Grid>
             </Grid>
         </Container>
     </HeroDetailsWrapper>
-)
+);
 
 export default HeroDetails;
