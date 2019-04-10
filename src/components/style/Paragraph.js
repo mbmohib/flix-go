@@ -17,6 +17,10 @@ const Paragraph = styled.h2`
             : props.theme.fontColor};
     line-height: 1.2;
     margin-bottom: 5px;
+
+    span {
+        color: ${props => props.theme.tertiaryColor}
+    }
 `;
 
 export default Paragraph;

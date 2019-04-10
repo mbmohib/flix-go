@@ -11,6 +11,10 @@ const ReletedMoviesWrapper = styled.div`
 `;
 
 class ReletedMovies extends Component {
+    state = {
+        movies : null
+    }
+    
     render() {
         return (
             <React.Fragment>
@@ -18,9 +22,12 @@ class ReletedMovies extends Component {
                 <ReletedMoviesWrapper>
                     <Container>
                         <Grid container>
-                            <Grid item sm={6}>
-                                <MovieListView />
-                            </Grid>
+                            {
+                                this.state.movies && 
+                                <Grid item sm={6}>
+                                    <MovieListView />
+                                </Grid>
+                            }
                         </Grid>
                     </Container>
                 </ReletedMoviesWrapper>

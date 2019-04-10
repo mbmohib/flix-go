@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 
 import axios from '../axios';
 import HeroDetails from '../components/HeroDetails';
 import ReletedMovies from '../components/ReletedMovies';
+import Loader from '../components/style/Loader';
+
+const PreLoader = styled.div`
+    height: 300px;
+`;
 
 class Details extends Component {
     state = {
@@ -30,7 +36,10 @@ class Details extends Component {
         return (
             <React.Fragment>
                 {
-                    this.state.movie && 
+                    !this.state.movie ? 
+                    <PreLoader>
+                        <Loader /> 
+                    </PreLoader> :
                     <HeroDetails movie={this.state.movie} />
                 }
                 <ReletedMovies />

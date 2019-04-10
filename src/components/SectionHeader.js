@@ -19,9 +19,9 @@ const SectionHeader = props => (
             <Title style={{ marginBottom: '20px' }} color="#ffffff" highWeight>
                 {props.title}
             </Title>
-            <Nav position="center"/>
+            <Nav position="center" navItems={props.navItems} />
         </Container>
     </SectionHeaderWrapper>
-)
+);
 
 export default SectionHeader;

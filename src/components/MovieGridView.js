@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
+import CalendarToday from '@material-ui/icons/CalendarTodayTwoTone' 
 
 import Ripple from './style/Ripple';
 import Title from './style/Title';
-import Menu from './Menu';
 import Rating from './Rating';
 
 const MoviePrimaryWrapper = styled(Link)`
@@ -15,6 +16,17 @@ const MovieCover = styled.img`
     margin-bottom: ${props => props.theme.smallSpace};
     width: 70%;
     margin-right: auto;
+`;
+
+const ExpectedPremiere = styled.p`
+    font-size: 1.2rem;
+    color: ${props => props.theme.tertiaryColor};
+    display: flex;
+    align-items: center;
+
+    svg {
+        margin-right: 5px;
+    }
 `;
 
 const MovieGridView = props => (
@@ -31,8 +43,17 @@ const MovieGridView = props => (
         >
             {props.movie.title}
         </Title>
-        <Menu />
-        <Rating number={props.movie.vote_average} />
+        {
+            !props.upcoming &&
+            <Rating number={props.movie.vote_average} />
+        }
+        {
+            props.upcoming &&
+            <ExpectedPremiere>
+                <CalendarToday />
+                {moment(props.movie.release_date, "YYYY-MM-DD").fromNow()}
+            </ExpectedPremiere>
+        }
     </MoviePrimaryWrapper>
 );
 

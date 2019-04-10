@@ -5,6 +5,7 @@ export default {
     whiteColor: '#ffffff',
     primaryColor: '#ff55a5',
     secondaryColor: '#28282d',
+    tertiaryColor: '#0cb457',
     greyColorOne: 'hsl(200, 25%, 96%)',
     greyColorTwo: 'hsl(200, 25%, 88%)',
 

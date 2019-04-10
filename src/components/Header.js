@@ -35,6 +35,17 @@ class Header extends Component {
 
     headerRef = React.createRef();
 
+    navItems = [
+        {
+            name: 'Home',
+            path: '/'
+        },
+        {
+            name: 'About',
+            path: '/about'
+        }
+    ]
+
     componentDidMount() {
         this.setState({ headerHeight: this.headerRef.current.clientHeight })
     }
@@ -55,7 +66,7 @@ class Header extends Component {
                             <Grid item sm={9}>
                                 <HeaderRightContainer>
                                     <Search />
-                                    <Nav/>
+                                    <Nav navItems={this.navItems}/>
                                 </HeaderRightContainer>
                             </Grid>
                         </Grid>

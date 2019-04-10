@@ -2,15 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
+import moment from 'moment';
 
 import Ripple from './style/Ripple';
-import cover from '../images/cover.jpg';
 import Title from './style/Title';
 import Paragraph from './style/Paragraph';
-import Menu  from './Menu';
 import Rating from './Rating';
-import Wrapper from './style/Wrapper';
-import Badge from './Badge';
 
 const MovieListViewWrapper = styled.div``;
 
@@ -23,25 +20,24 @@ const MovieListView = props => (
         <Grid container spacing={24}>
             <Grid item sm={4}>
                 <Ripple>
-                    <Link to="/3">
-                        <MovieCover src={cover} alt="" />
+                    <Link to={`/${props.movie.id}`}>
+                        <MovieCover src={`https://image.tmdb.org/t/p/w500${props.movie.poster_path}`} alt={props.movie.title} />
                     </Link>
                 </Ripple>
             </Grid>
             <Grid item sm={8}>
                 <Title small normalFont color="#ffffff">
-                    I Dream in Another Language
+                    {props.movie.title}
                 </Title>
-                <Menu />
-                <Wrapper style={{marginTop: '10px'}}>
-                    <Rating number="8.2" />
-                    <Badge />
-                </Wrapper>
                 <Paragraph medium>
-                    It is a long established fact that a reader will be
-                    distracted by the readable content of a page when looking at
-                    its layout. readable content of a page when looking at
-                    its layout.
+                    Release Date:{' '}
+                    <span>
+                        {moment(props.movie.release_date).format('MMMM DD, YYYY')}
+                    </span>
+                </Paragraph>
+                <Rating number={props.movie.vote_average} />
+                <Paragraph style={{marginTop: '10px'}} medium>
+                    {props.movie.overview}
                 </Paragraph>
             </Grid>
         </Grid>

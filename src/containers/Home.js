@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Hero from '../components/Hero';
+import Hero from './Hero';
 import ListView from './ListView';
 import GridView from './GridView';
 

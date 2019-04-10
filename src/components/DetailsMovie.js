@@ -50,7 +50,7 @@ const DetailsMovie = props => (
                     <Menu items={props.movie.genres} />
                 </Wrapper>
                 <Paragraph medium>
-                    Release year:{' '}
+                    Release Date: {' '}
                     {moment(props.movie.release_date).format('MMMM DD, YYYY')}
                 </Paragraph>
                 <Paragraph medium>

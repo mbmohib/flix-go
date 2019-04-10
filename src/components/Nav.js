@@ -32,12 +32,14 @@ const NavWrapper = styled.nav`
     }
 `;
 
-const Nav = props => (
-    <NavWrapper>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/about">About</NavLink>
-        <NavLink to="/contact">Contact</NavLink>
-    </NavWrapper>
-);
+const Nav = props => {
+    return (
+        <NavWrapper>
+            {props.navItems && props.navItems.map(item => (
+                <NavLink key={item.name} to={item.path}>{item.name}</NavLink>
+            ))}
+        </NavWrapper>
+    );
+};
 
 export default Nav;
