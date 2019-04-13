@@ -117,7 +117,7 @@ class Hero extends Component {
                 <Container>
                     <HeroHeader>
                         <Title transform="uppercase" color="#ffffff" highWeight>
-                            new items of this season
+                            new grossing movies of this season
                         </Title>
                         <CarouselControls>
                             <ArrowButton

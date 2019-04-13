@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import axios from '../axios';
 import HeroDetails from '../components/HeroDetails';
-import ReletedMovies from '../components/ReletedMovies';
+import RelatedMovies from './RelatedMovies';
 import Loader from '../components/style/Loader';
 
 const PreLoader = styled.div`
@@ -42,7 +42,10 @@ class Details extends Component {
                     </PreLoader> :
                     <HeroDetails movie={this.state.movie} />
                 }
-                <ReletedMovies />
+                {
+                    this.state.movie && 
+                    <RelatedMovies genres={this.state.movie.genres}/>
+                }
             </React.Fragment>
         )
     }

@@ -5,7 +5,6 @@ import { NavLink } from 'react-router-dom';
 const NavWrapper = styled.nav`
     display: flex;
     align-items: center;
-    height: 100%;
     justify-content: ${props =>
         props.position === 'center'
             ? 'center'
@@ -29,15 +28,26 @@ const NavWrapper = styled.nav`
         :hover {
             color: ${props => props.theme.primaryColor};
         }
+
+        &.active {
+            color: ${props => props.theme.primaryColor};
+        }
     }
 `;
 
 const Nav = props => {
     return (
         <NavWrapper>
-            {props.navItems && props.navItems.map(item => (
-                <NavLink key={item.name} to={item.path}>{item.name}</NavLink>
-            ))}
+            {props.navItems &&
+                props.navItems.map(item => (
+                    <NavLink
+                        key={item.name}
+                        to={item.path}
+                        // isActive={() => matchHash(item.path)}
+                    >
+                        {item.name}
+                    </NavLink>
+                ))}
         </NavWrapper>
     );
 };
