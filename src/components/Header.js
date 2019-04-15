@@ -41,12 +41,12 @@ class Header extends Component {
             path: '/'
         },
         {
-            name: 'About',
-            path: '/about'
-        },
-        {
             name: 'Genres',
             path: '/genres'
+        },
+        {
+            name: 'Archive',
+            path: '/archive'
         }
     ]
 

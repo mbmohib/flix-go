@@ -10,6 +10,7 @@ import axios from '../axios';
 import FormFilter from './FormFilter';
 import Title from './style/Title';
 import Container from './style/Container';
+import Wrapper from './style/Wrapper';
 
 const SectionHeaderWrapper = styled.div`
     padding: 30px;
@@ -22,37 +23,13 @@ const SectionHeaderWrapper = styled.div`
     }
 `;
 
-// const SelectMenu = withStyles({
-//     root: {
-//         color: '#ffffff'
-//     },
-//     icon: {
-//         fill: '#ffffff'
-//     }
-// })(Select);
-
-// const Label = withStyles({
-//     root: {
-//         color: '#ffffff'
-//     }
-// })(InputLabel);
-
 class SectionHeader extends Component {
     state = {
         dialog: false,
         genre: '',
         genres: null,
         year: '',
-        years: [
-            {
-                id: 2019,
-                name: '2019'
-            },
-            {
-                id: 2018,
-                name: '2018'
-            }
-        ],
+        years: [],
         language: '',
         languages: [
             {
@@ -81,6 +58,17 @@ class SectionHeader extends Component {
     };
 
     componentDidMount() {
+        const createYearsObj = [];
+        const createYears = Array.from(new Array(20));
+        let currentyear = 2019;
+        for (let i in createYears) {
+            createYearsObj.push({
+                id: currentyear,
+                name: currentyear
+            })
+            currentyear --;
+        }
+        this.setState({ years: createYearsObj })
         this.getGenres();
     }
 
@@ -132,14 +120,13 @@ class SectionHeader extends Component {
             <SectionHeaderWrapper>
                 <Container>
                     <Grid container alignItems="center">
-                        <Grid item sm={8}>
+                        <Grid item sm={7}>
                             <Title color="#ffffff" highWeight>
                                 {this.props.title}
                             </Title>
                         </Grid>
-                        <Grid item sm={4}>
-                            {/* {this.props.sortValue && (
-                            )} */}
+                        <Grid item sm={5}>
+                            <Wrapper justifyContent="space-around">
                                 <FormFilter
                                     white
                                     title="Sort"
@@ -149,14 +136,15 @@ class SectionHeader extends Component {
                                         this.props.handleSortChange
                                     }
                                 />
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={this.handleDialog}
+                                >
+                                    Filter
+                                </Button>
 
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={this.handleDialog}
-                            >
-                                Filter
-                            </Button>
+                            </Wrapper>
                         </Grid>
                     </Grid>
 

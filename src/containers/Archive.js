@@ -14,6 +14,10 @@ const ArchiveHeader = styled.div`
     background: url(${ArchiveHeaderBg}) center center / cover no-repeat;
 `;
 
+const PreLoader = styled.div`
+    height: 400px;
+`;
+
 class Archive extends Component {
     state = {
         movies: null,
@@ -100,7 +104,9 @@ class Archive extends Component {
                     submitDialog={this.submitDialog}
                 />
                 {this.state.loading ? (
-                    <Loader />
+                    <PreLoader>
+                        <Loader />
+                    </PreLoader>
                 ) : (
                     <ListView movies={this.state.movies} />
                 )}
