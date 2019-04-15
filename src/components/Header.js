@@ -43,6 +43,10 @@ class Header extends Component {
         {
             name: 'About',
             path: '/about'
+        },
+        {
+            name: 'Genres',
+            path: '/genres'
         }
     ]
 

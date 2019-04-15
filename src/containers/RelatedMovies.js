@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 
 import axios from '../axios';
 import SectionHeader from '../components/SectionHeader';
@@ -53,6 +54,17 @@ class RelatedMovies extends Component {
         }
     };
 
+    submitDialog = (data) => {
+        const queryParams = [];
+        for (let i in data) {
+            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(data[i]))
+        }
+        this.props.history.push({
+            pathname: '/archive',
+            search: '?' + queryParams.join('&')
+        })
+    }
+
     render() {
         console.log('RelatedMovies: Render');
         return (
@@ -61,6 +73,7 @@ class RelatedMovies extends Component {
                     title="Related Movies"
                     sortValue={this.state.sortValue}
                     handleSortChange={this.handleSortChange}
+                    submitDialog={this.submitDialog}
                 />
                 {this.setState.loading ? (
                     <Loader />
@@ -72,4 +85,4 @@ class RelatedMovies extends Component {
     }
 }
 
-export default RelatedMovies;
+export default withRouter(RelatedMovies);

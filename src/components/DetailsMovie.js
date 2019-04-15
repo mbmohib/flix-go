@@ -47,7 +47,7 @@ const DetailsMovie = props => (
                 <Rating number={props.movie.vote_average} />
                 <Wrapper>
                     <p>Genre: </p>
-                    <Menu items={props.movie.genres} />
+                    <Menu link items={props.movie.genres} />
                 </Wrapper>
                 <Paragraph medium>
                     Release Date: {' '}

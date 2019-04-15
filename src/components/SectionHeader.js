@@ -1,75 +1,213 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
 import Grid from '@material-ui/core/Grid';
-import { withStyles } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
 
-import Nav from './Nav';
+import axios from '../axios';
+import FormFilter from './FormFilter';
 import Title from './style/Title';
 import Container from './style/Container';
 
 const SectionHeaderWrapper = styled.div`
-    padding-top: 40px;
-    padding-bottom: 10px;
+    padding: 30px;
     box-shadow: ${props => props.theme.largeShadow};
     background: ${props => props.theme.secondaryColor};
     border-top: 2px solid ${props => props.theme.primaryColor};
+
+    h1 {
+        margin-bottom: 0;
+    }
 `;
 
-const SelectMenu = withStyles({
-    root: {
-        color: '#ffffff'
-    },
-    icon: {
-        fill: '#ffffff',
-    },
-})(Select)
+// const SelectMenu = withStyles({
+//     root: {
+//         color: '#ffffff'
+//     },
+//     icon: {
+//         fill: '#ffffff'
+//     }
+// })(Select);
 
+// const Label = withStyles({
+//     root: {
+//         color: '#ffffff'
+//     }
+// })(InputLabel);
 
-const Label = withStyles({
-    root: {
-        color: '#ffffff',
+class SectionHeader extends Component {
+    state = {
+        dialog: false,
+        genre: '',
+        genres: null,
+        year: '',
+        years: [
+            {
+                id: 2019,
+                name: '2019'
+            },
+            {
+                id: 2018,
+                name: '2018'
+            }
+        ],
+        language: '',
+        languages: [
+            {
+                id: 'en',
+                name: 'English'
+            },
+            {
+                id: 'bn',
+                name: 'Bangla'
+            },
+            {
+                id: 'hi',
+                name: 'Hindi'
+            }
+        ],
+        sortValues: [
+            {
+                id: 'vote_average.desc',
+                name: 'Rating'
+            },
+            {
+                id: 'revenue.desc',
+                name: 'Grossing'
+            }
+        ]
+    };
+
+    componentDidMount() {
+        this.getGenres();
     }
-})(InputLabel)
 
+    getGenres() {
+        axios.get('genre/movie/list').then(res => {
+            this.setState({
+                genres: res.data.genres
+            });
+        });
+    }
 
-const SectionHeader = props => (
-    <SectionHeaderWrapper>
-        <Container>
-            <Grid container>
-                <Grid item sm={8}>
-                    <Title style={{ marginBottom: '20px' }} color="#ffffff" highWeight>
-                        {props.title}
-                    </Title>
-                    <Nav position="center" navItems={props.navItems} />
-                </Grid>
-                <Grid item sm={4}>
-                    <FormControl>
-                        <Label htmlFor="age-helper">Sort</Label>
+    handleDialog = () => {
+        this.setState(prevState => {
+            return {
+                dialog: !prevState.dialog
+            };
+        });
+    };
 
-                        <SelectMenu
-                            value={props.sortValue}
-                            onChange={props.handleSortChange}
-                            input={<Input name="age" id="age-helper" />}
-                        >
-                            <MenuItem value="">
-                                <em>None</em>
-                            </MenuItem>
-                            <MenuItem value="vote_average.desc">Rating</MenuItem>
-                            <MenuItem value="revenue.desc">Grossing</MenuItem>
-                        </SelectMenu>
-                        <FormHelperText style={{ color: '#ffffff' }}>Sort Movies</FormHelperText>
-                    </FormControl>
-                </Grid>
-            </Grid>
+    handleYearChange = event => {
+        if (event.target.value !== this.state.year) {
+            this.setState({ year: event.target.value });
+        }
+    };
 
-        </Container>
-    </SectionHeaderWrapper>
-);
+    handleGenreChange = event => {
+        if (event.target.value !== this.state.genre) {
+            this.setState({ genre: event.target.value });
+        }
+    };
+
+    handleLanguageChange = event => {
+        if (event.target.value !== this.state.language) {
+            this.setState({ language: event.target.value });
+        }
+    };
+
+    submitDialog = () => {
+        this.props.submitDialog({
+            with_genres: this.state.genre,
+            year: this.state.year,
+            with_original_language: this.state.language
+        });
+        this.handleDialog();
+    };
+
+    render() {
+        return (
+            <SectionHeaderWrapper>
+                <Container>
+                    <Grid container alignItems="center">
+                        <Grid item sm={8}>
+                            <Title color="#ffffff" highWeight>
+                                {this.props.title}
+                            </Title>
+                        </Grid>
+                        <Grid item sm={4}>
+                            {/* {this.props.sortValue && (
+                            )} */}
+                                <FormFilter
+                                    white
+                                    title="Sort"
+                                    item={this.props.sortValue}
+                                    items={this.state.sortValues}
+                                    handleFilterChange={
+                                        this.props.handleSortChange
+                                    }
+                                />
+
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={this.handleDialog}
+                            >
+                                Filter
+                            </Button>
+                        </Grid>
+                    </Grid>
+
+                    <Dialog
+                        disableEscapeKeyDown
+                        open={this.state.dialog}
+                        onClose={this.handleDialog}
+                    >
+                        <DialogContent>
+                            <FormFilter
+                                title="Genre"
+                                item={this.state.genre}
+                                items={this.state.genres}
+                                handleFilterChange={this.handleGenreChange}
+                            />
+                            <FormFilter
+                                title="Year"
+                                item={this.state.year}
+                                items={this.state.years}
+                                handleFilterChange={this.handleYearChange}
+                            />
+
+                            <FormFilter
+                                title="Language"
+                                item={this.state.language}
+                                items={this.state.languages}
+                                handleFilterChange={this.handleLanguageChange}
+                            />
+                        </DialogContent>
+                        <DialogActions>
+                            <Button
+                                variant="outlined"
+                                onClick={this.handleDialog}
+                                color="primary"
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                style={{ padding: '0 20px' }}
+                                variant="contained"
+                                onClick={this.submitDialog}
+                                color="primary"
+                            >
+                                Apply Filter
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                </Container>
+            </SectionHeaderWrapper>
+        );
+    }
+}
 
 export default SectionHeader;

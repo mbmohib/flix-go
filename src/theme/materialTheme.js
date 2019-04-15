@@ -5,7 +5,8 @@ import { createMuiTheme } from '@material-ui/core/styles';
 const materialTheme = createMuiTheme({
   palette: {
     primary: {
-        main: '#ff55a5'
+        main: '#ff55a5',
+        contrastText: 'white'
     },
     secondary: {
         main: '#28282d'
@@ -34,7 +35,7 @@ const materialTheme = createMuiTheme({
         height: 48,
         padding: '0 80px',
         boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',// Some CSS
-      },
+      }
     },
     MuiTypography: {
         body1: {

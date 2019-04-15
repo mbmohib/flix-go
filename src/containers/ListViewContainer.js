@@ -12,44 +12,16 @@ class ListViewContainer extends Component {
         movies: null,
         year: this.props.location.hash.replace('#', '') || moment().year(),
         sortValue: 'vote_average.desc',
-        loading: true
+        loading: true,
     };
 
-    navItems = [
-        {
-            name: '2019',
-            path: '#2019'
-        },
-        {
-            name: '2018',
-            path: '#2018'
-        },
-        {
-            name: '2017',
-            path: '#2017'
-        },
-        {
-            name: '2016',
-            path: '#2016'
-        }
-    ];
-
     componentDidMount() {
-        console.log('Hero: ComponentDidMount');
+        console.log('Hero: ComponentDidMount');;
         this.getMovies(this.state.year);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         console.log('ListView: ComponentDidUpdate');
-
-        if (
-            this.props.location.hash.replace('#', '') &&
-            prevState.year !== this.props.location.hash.replace('#', '')
-        ) {
-            this.setState({ year: this.props.location.hash.replace('#', '') });
-            this.getMovies(this.state.year);
-        }
-
         if (prevState.sortValue !== this.state.sortValue) {
             this.getMovies(this.state.year);
         }
@@ -58,7 +30,7 @@ class ListViewContainer extends Component {
     getMovies(year) {
         axios
             .get(
-                `/discover/movie?primary_release_year=${year}&sort_by=${
+                `/discover/movie?year=${year}&sort_by=${
                     this.state.sortValue
                 }`
             )
@@ -77,6 +49,17 @@ class ListViewContainer extends Component {
         }
     };
 
+    submitDialog = (data) => {
+        const queryParams = [];
+        for (let i in data) {
+            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(data[i]))
+        }
+        this.props.history.push({
+            pathname: '/archive',
+            search: '?' + queryParams.join('&')
+        })
+    }
+
     render() {
         let titleValue;
         if (this.state.sortValue === 'vote_average.desc') {
@@ -90,9 +73,9 @@ class ListViewContainer extends Component {
             <React.Fragment>
                 <SectionHeader
                     title={sectionTitle}
-                    navItems={this.navItems}
                     sortValue={this.state.sortValue}
                     handleSortChange={this.handleSortChange}
+                    submitDialog={this.submitDialog}
                 />
 
                 {this.state.loading ? (

@@ -43,7 +43,7 @@ const Nav = props => {
                     <NavLink
                         key={item.name}
                         to={item.path}
-                        // isActive={() => matchHash(item.path)}
+                        exact
                     >
                         {item.name}
                     </NavLink>

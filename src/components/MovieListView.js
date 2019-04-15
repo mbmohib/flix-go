@@ -16,6 +16,14 @@ const MovieCover = styled.img`
     margin-bottom: ${props => props.theme.smallSpace};
 `;
 
+const excerpt = string => {
+    if(string.length > 240) {
+        return string.slice(0, 240) + '...'
+    }
+
+    return string;
+};
+
 const MovieListView = props => (
     <MovieListViewWrapper>
         <Grid container spacing={24}>
@@ -52,7 +60,7 @@ const MovieListView = props => (
                 </Paragraph>
                 <Rating number={props.movie.vote_average} />
                 <Paragraph style={{ marginTop: '10px' }} medium>
-                    {props.movie.overview}
+                    {excerpt(props.movie.overview)}
                 </Paragraph>
             </Grid>
         </Grid>
