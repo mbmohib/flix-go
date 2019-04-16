@@ -8,43 +8,74 @@ import withErrorHandler from '../hoc/withErrorHandler';
 
 class RelatedMovies extends Component {
     state = {
-        movies: null,
+        movies: [],
+        totolPages: null,
+        currentPage: 1,
         sortValue: '',
         genreIds: null,
         loading: true
     };
 
     componentDidMount() {
-        console.log('RelatedMovies: ComponentDidMount');
-        const genreIds = this.props.genres.map(genre => {
-            return genre['id'];
-        });
-
-        this.setState({ genreIds }, () => {
-            this.getMovies(this.state.genreIds);
-        });
+        // console.log('RelatedMovies: ComponentDidMount');
+        this.getMovies();
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log('RelatedMovies: componentDidUpdate');
+        // console.log('RelatedMovies: componentDidUpdate');
         if (prevState.sortValue !== this.state.sortValue) {
-            this.getMovies(this.state.genreIds);
+            this.setState({ movies: [], loading: true, currentPage: 0 }, () => {
+                this.getMovies();
+            })
+        }
+
+        if(prevState.currentPage !== this.state.currentPage) {
+            this.getMovies();
         }
     }
 
-    getMovies(genreIds) {
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.listenToScroll);
+    }
+
+    listenToScroll = () => {
+        const winScroll =
+            document.body.scrollTop || document.documentElement.scrollTop;
+
+        const height =
+            document.documentElement.scrollHeight -
+            document.documentElement.clientHeight;
+
+        const scrolled = winScroll / height;
+        if(scrolled > 0.8) {
+            // console.log('Archive: Scroll Event Detached');
+            window.removeEventListener('scroll', this.listenToScroll);
+            if(this.state.currentPage < this.state.totolPages) {
+                this.setState((prevState) => {
+                    return {
+                        currentPage: prevState.currentPage + 1
+                    }
+                });
+            }
+        }
+    };
+
+    getMovies() {
         axios
             .get(
-                `/discover/movie?with_genres=${genreIds}&sort_by=${
+                `movie/${this.props.movieId}/similar?sort_by=${
                     this.state.sortValue
-                }`
+                }${this.state.currentPage > 0 &&
+                    `&page=${this.state.currentPage}`}`
             )
             .then(res => {
-                const results = res.data.results;
+                const movies = [...this.state.movies, ...res.data.results]
                 this.setState({
-                    movies: results,
+                    movies: movies,
+                    totolPages: res.data.total_pages,
                     loading: false
                 });
+                window.addEventListener('scroll', this.listenToScroll);
             })
             .catch( err => {})
     }
@@ -67,7 +98,7 @@ class RelatedMovies extends Component {
     }
 
     render() {
-        console.log('RelatedMovies: Render');
+        // console.log('RelatedMovies: Render');
         return (
             <React.Fragment>
                 <SectionHeader

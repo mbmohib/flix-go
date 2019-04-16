@@ -14,10 +14,12 @@ const withErrorHandler = WrappedComponent => {
             this.state = {
                 error: null
             };
+
             this.reqInterceptors = axios.interceptors.request.use(req => {
                 this.setState({ error: null });
                 return req;
             });
+            
             this.resInterceptors = axios.interceptors.response.use(
                 res => res,
                 error => {
@@ -40,7 +42,7 @@ const withErrorHandler = WrappedComponent => {
             return (
                 <React.Fragment>
                     <Dialog
-                        open={this.state.error}
+                        open={!!this.state.error}
                         onClose={this.handleClose}
                     >
                         <DialogContent>

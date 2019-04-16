@@ -59,9 +59,9 @@ class SectionHeader extends Component {
 
     componentDidMount() {
         const createYearsObj = [];
-        const createYears = Array.from(new Array(20));
+        const createYears = Array.from(new Array(30));
         let currentyear = 2019;
-        for (let i in createYears) {
+        for (let i =0; i<createYears.length; i++) {
             createYearsObj.push({
                 id: currentyear,
                 name: currentyear

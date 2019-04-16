@@ -21,14 +21,17 @@ const PreLoader = styled.div`
 
 class Archive extends Component {
     state = {
-        movies: null,
+        movies: [],
         filterData: null,
+        totolPages: null,
+        currentPage: 0,
         sortValue: '',
         loading: true
     };
 
     componentDidMount() {
         console.log('Archive: ComponentDidMount');
+        // window.addEventListener('scroll', this.listenToScroll);
         this.getQueries();
     }
 
@@ -38,9 +41,42 @@ class Archive extends Component {
             prevState.filterData !== this.state.filterData ||
             prevState.sortValue !== this.state.sortValue
         ) {
+            this.setState({ movies: [], loading: true, currentPage: 0 }, () => {
+                this.getMovies();
+            })
+        }
+
+        if(prevState.currentPage !== this.state.currentPage) {
             this.getMovies();
         }
     }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.listenToScroll);
+    }
+
+    listenToScroll = () => {
+        const winScroll =
+            document.body.scrollTop || document.documentElement.scrollTop;
+
+        const height =
+            document.documentElement.scrollHeight -
+            document.documentElement.clientHeight;
+
+        const scrolled = winScroll / height;
+
+        if(scrolled > 0.8) {
+            // console.log('Archive: Scroll Event Detached');
+            window.removeEventListener('scroll', this.listenToScroll);
+            if(this.state.currentPage < this.state.totolPages) {
+                this.setState((prevState) => {
+                    return {
+                        currentPage: prevState.currentPage + 1
+                    }
+                });
+            }
+        }
+    };
 
     getQueries() {
         const query = new URLSearchParams(this.props.location.search);
@@ -58,13 +94,19 @@ class Archive extends Component {
             .get(
                 `/discover/movie?${this.state.filterData.join('&')}&sort_by=${
                     this.state.sortValue
-                }`
+                }${this.state.currentPage > 0 &&
+                    `&page=${this.state.currentPage}`}`
             )
             .then(res => {
+                const movies = [...this.state.movies, ...res.data.results]
                 this.setState({
-                    movies: res.data.results,
+                    movies: movies,
+                    totolPages: res.data.total_pages,
                     loading: false
                 });
+
+                // console.log('Archive: Scroll Event Attached');
+                window.addEventListener('scroll', this.listenToScroll);
             })
             .catch(error => {});
     }
@@ -75,18 +117,20 @@ class Archive extends Component {
         }
     };
 
-    submitDialog = (data) => {
+    submitDialog = data => {
         const queryParams = [];
         for (let i in data) {
-            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(data[i]))
+            queryParams.push(
+                encodeURIComponent(i) + '=' + encodeURIComponent(data[i])
+            );
         }
         this.props.history.replace({
             pathname: '/archive',
             search: '?' + queryParams.join('&')
-        })
+        });
 
-        this.setState({ filterData : queryParams, loading: true });
-    }
+        this.setState({ filterData: queryParams, loading: true });
+    };
 
     render() {
         return (
