@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router';
 
 import axios from '../axios';
 import SectionHeader from '../components/SectionHeader';
 import ListView from '../components/ListView';
 import Loader from '../components/style/Loader';
+import withErrorHandler from '../hoc/withErrorHandler';
 
 class RelatedMovies extends Component {
     state = {
@@ -45,7 +45,8 @@ class RelatedMovies extends Component {
                     movies: results,
                     loading: false
                 });
-            });
+            })
+            .catch( err => {})
     }
 
     handleSortChange = event => {
@@ -85,4 +86,4 @@ class RelatedMovies extends Component {
     }
 }
 
-export default withRouter(RelatedMovies);
+export default withErrorHandler(RelatedMovies);

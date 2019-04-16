@@ -8,6 +8,7 @@ import Title from '../components/style/Title';
 import ArchiveHeaderBg from '../images/gridview-bg.jpg';
 import ListView from '../components/ListView';
 import SectionHeader from '../components/SectionHeader';
+import withErrorHandler from '../hoc/withErrorHandler';
 
 const ArchiveHeader = styled.div`
     padding: 60px 0;
@@ -64,7 +65,8 @@ class Archive extends Component {
                     movies: res.data.results,
                     loading: false
                 });
-            });
+            })
+            .catch(error => {});
     }
 
     handleSortChange = event => {
@@ -115,4 +117,4 @@ class Archive extends Component {
     }
 }
 
-export default Archive;
+export default withErrorHandler(Archive);

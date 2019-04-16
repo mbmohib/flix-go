@@ -3,6 +3,7 @@ import moment from 'moment';
 
 import axios from '../axios';
 import GridView from '../components/GridView';
+import withErrorHandler from '../hoc/withErrorHandler';
 
 class GridViewContainer extends Component {
     state = {
@@ -35,7 +36,8 @@ class GridViewContainer extends Component {
                 this.setState({
                     movies: results
                 });
-            });
+            })
+            .catch(err => {})
     }
 
     render() {
@@ -45,4 +47,4 @@ class GridViewContainer extends Component {
     }
 }
 
-export default GridViewContainer;
+export default withErrorHandler(GridViewContainer);

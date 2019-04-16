@@ -12,6 +12,7 @@ import Container from '../components/style/Container';
 import MovieGridView from '../components/MovieGridView';
 import Loader from '../components/style/Loader';
 import heroBg from '../images/hero-bg.jpg';
+import withErrorHandler from '../hoc/withErrorHandler';
 
 const HeroWrapper = styled.div`
     padding: 70px 0 40px;
@@ -85,7 +86,8 @@ class Hero extends Component {
                     totalResult: res.data.results.length,
                     loading: false
                 });
-            });
+            })
+            .catch(err => {})
     }
 
     handleNextSlide = () => {
@@ -167,4 +169,4 @@ class Hero extends Component {
     }
 }
 
-export default Hero;
+export default withErrorHandler(Hero);

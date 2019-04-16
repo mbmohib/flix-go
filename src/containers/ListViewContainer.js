@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router';
 import moment from 'moment';
 
 import axios from '../axios';
 import SectionHeader from '../components/SectionHeader';
 import ListView from '../components/ListView';
 import Loader from '../components/style/Loader';
+import withErrorHandler from '../hoc/withErrorHandler';
 
 class ListViewContainer extends Component {
     state = {
@@ -40,7 +40,8 @@ class ListViewContainer extends Component {
                     movies: results,
                     loading: false
                 });
-            });
+            })
+            .catch(err => {});
     }
 
     handleSortChange = event => {
@@ -88,4 +89,4 @@ class ListViewContainer extends Component {
     }
 }
 
-export default withRouter(ListViewContainer);
+export default withErrorHandler(ListViewContainer);

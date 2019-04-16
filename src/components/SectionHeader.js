@@ -137,6 +137,7 @@ class SectionHeader extends Component {
                                     }
                                 />
                                 <Button
+                                    style={{ padding: '0 60px' }}
                                     variant="contained"
                                     color="primary"
                                     onClick={this.handleDialog}
@@ -183,7 +184,6 @@ class SectionHeader extends Component {
                                 Cancel
                             </Button>
                             <Button
-                                style={{ padding: '0 20px' }}
                                 variant="contained"
                                 onClick={this.submitDialog}
                                 color="primary"

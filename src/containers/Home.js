@@ -9,7 +9,7 @@ class Home extends Component {
         return (
             <React.Fragment>
                 <Hero />
-                <ListViewContainer />
+                <ListViewContainer {...this.props}/>
                 <GridViewContainer />
             </React.Fragment>
         )

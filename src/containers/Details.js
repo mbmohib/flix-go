@@ -5,6 +5,7 @@ import axios from '../axios';
 import HeroDetails from '../components/HeroDetails';
 import RelatedMovies from './RelatedMovies';
 import Loader from '../components/style/Loader';
+import withErrorHandler from '../hoc/withErrorHandler';
 
 const PreLoader = styled.div`
     height: 300px;
@@ -51,4 +52,4 @@ class Details extends Component {
     }
 }
 
-export default Details;
+export default withErrorHandler(Details);
