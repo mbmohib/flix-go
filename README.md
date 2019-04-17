@@ -1,4 +1,4 @@
-# M-Hero
+# FlixGo (Movie Info App)
 
 ### An App for displaying information about Movie useing themoviedb API. Its  built on React.
 
