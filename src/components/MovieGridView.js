@@ -30,7 +30,7 @@ const ExpectedPremiere = styled.p`
 `;
 
 const MovieGridView = props => (
-    <MoviePrimaryWrapper to={`/${props.movie.id}`}>
+    <MoviePrimaryWrapper to={`/movie/${props.movie.id}`}>
         <Ripple>
             <MovieCover src={`https://image.tmdb.org/t/p/w500${props.movie.poster_path}`} alt="" />
         </Ripple>

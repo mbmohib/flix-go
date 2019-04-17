@@ -6,19 +6,20 @@ import Home from '../containers/Home';
 import Details from '../containers/Details';
 import Archive from '../containers/Archive';
 import Genres from '../containers/Genres';
-
+import FourOFour from '../components/FourOFour';
 
 const AppRouter = () => (
     <BrowserRouter>
-        <Layout>            
+        <Layout>
             <Switch>
-                <Route path="/" component={Home} exact/>
+                <Route path="/" component={Home} exact />
                 <Route path="/genres" component={Genres} />
                 <Route path="/archive" component={Archive} />
-                <Route path="/:id" component={Details} />
+                <Route path="/movie/:id" component={Details} />
+                <Route component={FourOFour} />
             </Switch>
         </Layout>
     </BrowserRouter>
-)
+);
 
 export default AppRouter;

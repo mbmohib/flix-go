@@ -29,7 +29,7 @@ const MovieListView = props => (
         <Grid container spacing={24}>
             <Grid item sm={4}>
                 <Ripple>
-                    <Link to={`/${props.movie.id}`}>
+                    <Link to={`/movie/${props.movie.id}`}>
                         {props.movie.poster_path ? (
                             <MovieCover
                                 src={`https://image.tmdb.org/t/p/w500${

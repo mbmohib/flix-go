@@ -1,16 +1,16 @@
 import React from 'react';
-import SearchIcon from '@material-ui/icons/Search';
+import SearchFormIcon from '@material-ui/icons/Search';
 import styled from 'styled-components';
 import { withStyles } from '@material-ui/core';
 
-const SearchWrapper = styled.div`
+const SearchFormWrapper = styled.div`
     position: relative;
     margin-left: 0;
     width: 100%;
     margin-right: 5%;
 `;
 
-const SearchImage = withStyles({
+const SearchFormImage = withStyles({
     root: {
         color: '#fff',
         width: '25px',
@@ -22,9 +22,9 @@ const SearchImage = withStyles({
         alignItems: 'center',
         justifyContent: 'center',
     }
-})(SearchIcon)
+})(SearchFormIcon)
 
-const SearchInput = styled.input`
+const SearchFormInput = styled.input`
     background-color: #4d4d4d;
     padding: 10px;
     border-radius: 5px;
@@ -42,13 +42,13 @@ const SearchInput = styled.input`
     }
 `;
 
-const Search = props => (
-    <SearchWrapper>
-        <SearchImage />
-        <SearchInput
-            placeholder="Search…"
+const SearchForm = props => (
+    <SearchFormWrapper>
+        <SearchFormImage />
+        <SearchFormInput
+            placeholder="SearchForm…"
         />
-    </SearchWrapper>
+    </SearchFormWrapper>
 );
 
-export default Search;
+export default SearchForm;

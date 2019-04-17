@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 import Container from './style/Container';
 import Logo from '../images/logo.svg';
 import Nav from './Nav';
-import Search from './Search';
 
 const HeaderContainer = styled.header`
     padding: 20px 0;
@@ -26,6 +25,7 @@ const HeaderRightContainer = styled.div`
     display: flex;
     align-items: center;
     height: 100%;
+    justify-content: flex-end;
 `;
 
 class Header extends Component {
@@ -69,14 +69,13 @@ class Header extends Component {
                             </Grid>
                             <Grid item sm={9}>
                                 <HeaderRightContainer>
-                                    <Search />
-                                    <Nav navItems={this.navItems}/>
+                                    <Nav navItems={this.navItems} position="right"/>
                                 </HeaderRightContainer>
                             </Grid>
                         </Grid>
                     </Container>
                 </HeaderContainer>
-                <div style={{ height: this.state.headerHeight }} />
+                <div style={{ height: this.state.headerHeight + 10 }} />
             </React.Fragment>
         );
     }
