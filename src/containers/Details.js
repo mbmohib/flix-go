@@ -30,6 +30,11 @@ class Details extends Component {
         }
     }
 
+    /**
+     * Get Movies
+     *
+     * @memberof Details
+     */
     getMovie() {
         axios.get(`/movie/${this.props.match.params.id}`).then(res => {
             this.setState({

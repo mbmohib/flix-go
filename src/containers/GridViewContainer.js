@@ -11,20 +11,23 @@ class GridViewContainer extends Component {
     };
 
     componentDidMount() {
-        console.log('GridView: ComponentDidMount')
+        console.log('GridView: ComponentDidMount');
         this.getMovies();
     }
 
     componentDidUpdate() {
-        console.log('GridView: ComponentDidUpdate')
+        console.log('GridView: ComponentDidUpdate');
         setTimeout(() => {
+            // Handle nuke carousal bug on navigation
             window.dispatchEvent(new Event('resize'));
         }, 0);
     }
 
     getMovies() {
         const today = moment().format('YYYY-MM-DD');
-        const nextDate = moment().add(60, 'days').format('YYYY-MM-DD');
+        const nextDate = moment()
+            .add(60, 'days')
+            .format('YYYY-MM-DD');
 
         axios
             .get(
@@ -37,13 +40,13 @@ class GridViewContainer extends Component {
                     movies: results
                 });
             })
-            .catch(err => {})
+            .catch(err => {});
     }
 
     render() {
         return (
-            <GridView title="Expected premiere" movies={this.state.movies}/>
-        )
+            <GridView title="Expected premiere" movies={this.state.movies} />
+        );
     }
 }
 

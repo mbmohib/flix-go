@@ -34,11 +34,13 @@ const MenuItem = styled.p`
 `;
 
 const Menu = props => {
-
     return props.link ? (
         <MenuWrapper>
             {props.items.map(item => (
-                <LinkItem key={item['name']} to={`/archive?with_genres=${item['id']}`}>
+                <LinkItem
+                    key={item['name']}
+                    to={`/archive?with_genres=${item['id']}`}
+                >
                     {item['name']}
                 </LinkItem>
             ))}
@@ -46,7 +48,10 @@ const Menu = props => {
     ) : (
         <MenuWrapper>
             {props.items.map(item => (
-                <MenuItem key={item['name']} to={`/archive?with_genres=${item['id']}`}>
+                <MenuItem
+                    key={item['name']}
+                    to={`/archive?with_genres=${item['id']}`}
+                >
                     {item['name']}
                 </MenuItem>
             ))}

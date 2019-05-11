@@ -44,17 +44,30 @@ class ListViewContainer extends Component {
             .catch(err => {});
     }
 
+    /**
+     * Set sort value on local state
+     *
+     * @memberof ListViewContainer
+     */
     handleSortChange = event => {
         if (event.target.value !== this.state.sortValue) {
             this.setState({ sortValue: event.target.value, loading: true });
         }
     };
 
+    /**
+     * Set filter data and query params
+     *
+     * @memberof ListViewContainer
+     */
     submitDialog = (data) => {
+        // Format data into query params
         const queryParams = [];
         for (let i in data) {
             queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(data[i]))
         }
+
+        // Set query params
         this.props.history.push({
             pathname: '/archive',
             search: '?' + queryParams.join('&')

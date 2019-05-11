@@ -6,6 +6,8 @@ import ListView from '../components/ListView';
 import Loader from '../components/style/Loader';
 import withErrorHandler from '../hoc/withErrorHandler';
 
+// TODO: Refactor and remove reduntant codes
+
 class RelatedMovies extends Component {
     state = {
         movies: [],
@@ -38,6 +40,12 @@ class RelatedMovies extends Component {
         window.removeEventListener('scroll', this.listenToScroll);
     }
 
+    /**
+     * Change pagination if user scroll to
+     * near end of the page
+     *
+     * @memberof Archive
+     */
     listenToScroll = () => {
         const winScroll =
             document.body.scrollTop || document.documentElement.scrollTop;
@@ -46,7 +54,10 @@ class RelatedMovies extends Component {
             document.documentElement.scrollHeight -
             document.documentElement.clientHeight;
 
+        // Get current scrolled position
         const scrolled = winScroll / height;
+
+        // Check if user reach to near to end of the page
         if(scrolled > 0.8) {
             // console.log('Archive: Scroll Event Detached');
             window.removeEventListener('scroll', this.listenToScroll);
@@ -80,17 +91,30 @@ class RelatedMovies extends Component {
             .catch( err => {})
     }
 
+    /** 
+     * Set sort value
+     *
+     * @memberof RelatedMovies
+     */
     handleSortChange = event => {
         if(event.target.value !== this.state.sortValue) {
             this.setState({ sortValue: event.target.value, loading: true });
         }
     };
 
+    /** 
+     * Set filter data and query params
+     *
+     * @memberof RelatedMovies
+     */
     submitDialog = (data) => {
+        // Format data into query params
         const queryParams = [];
         for (let i in data) {
             queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(data[i]))
         }
+
+        // Set query params
         this.props.history.push({
             pathname: '/archive',
             search: '?' + queryParams.join('&')
@@ -98,7 +122,6 @@ class RelatedMovies extends Component {
     }
 
     render() {
-        // console.log('RelatedMovies: Render');
         return (
             <React.Fragment>
                 <SectionHeader

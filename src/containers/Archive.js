@@ -31,7 +31,6 @@ class Archive extends Component {
 
     componentDidMount() {
         console.log('Archive: ComponentDidMount');
-        // window.addEventListener('scroll', this.listenToScroll);
         this.getQueries();
     }
 
@@ -46,15 +45,28 @@ class Archive extends Component {
             })
         }
 
+        // Get next page's data on pagination
         if(prevState.currentPage !== this.state.currentPage) {
             this.getMovies();
         }
     }
 
+    /**
+     * Remove scroll event listner for performance
+     * on mounting component
+     *
+     * @memberof Archive
+     */
     componentWillUnmount() {
         window.removeEventListener('scroll', this.listenToScroll);
     }
 
+    /**
+     * Change pagination if user scroll to
+     * near end of the page
+     *
+     * @memberof Archive
+     */
     listenToScroll = () => {
         const winScroll =
             document.body.scrollTop || document.documentElement.scrollTop;
@@ -63,10 +75,11 @@ class Archive extends Component {
             document.documentElement.scrollHeight -
             document.documentElement.clientHeight;
 
+        // Get current scrolled position
         const scrolled = winScroll / height;
 
+        // Check if user reach to near to end of the page
         if(scrolled > 0.8) {
-            // console.log('Archive: Scroll Event Detached');
             window.removeEventListener('scroll', this.listenToScroll);
             if(this.state.currentPage < this.state.totolPages) {
                 this.setState((prevState) => {
@@ -78,6 +91,11 @@ class Archive extends Component {
         }
     };
 
+    /**
+     * Set filter data from query params
+     *
+     * @memberof Archive
+     */
     getQueries() {
         const query = new URLSearchParams(this.props.location.search);
         const filterData = [];
@@ -89,6 +107,11 @@ class Archive extends Component {
         this.setState({ filterData });
     }
 
+    /**
+     * Get Movies
+     *
+     * @memberof Archive
+     */
     getMovies() {
         axios
             .get(
@@ -111,19 +134,32 @@ class Archive extends Component {
             .catch(error => {});
     }
 
+    /**
+     * Set sort value
+     *
+     * @memberof Archive
+     */
     handleSortChange = event => {
         if (event.target.value !== this.state.sortValue) {
             this.setState({ sortValue: event.target.value, loading: true });
         }
     };
 
+    /**
+     * Set filter data and query params
+     *
+     * @memberof Archive
+     */
     submitDialog = data => {
+        // Format data into query params
         const queryParams = [];
         for (let i in data) {
             queryParams.push(
                 encodeURIComponent(i) + '=' + encodeURIComponent(data[i])
             );
         }
+
+        // Set query params
         this.props.history.replace({
             pathname: '/archive',
             search: '?' + queryParams.join('&')

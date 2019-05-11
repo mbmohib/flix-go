@@ -7,6 +7,12 @@ import Button from '@material-ui/core/Button';
 
 import axios from '../axios';
 
+/**
+ * Global Error Handler
+ *
+ * @param {*} WrappedComponent
+ * @returns
+ */
 const withErrorHandler = WrappedComponent => {
     return class extends Component {
         constructor(props) {
@@ -15,11 +21,13 @@ const withErrorHandler = WrappedComponent => {
                 error: null
             };
 
+            // Set Error null on Request
             this.reqInterceptors = axios.interceptors.request.use(req => {
                 this.setState({ error: null });
                 return req;
             });
-            
+
+            // Set Error on Response if any
             this.resInterceptors = axios.interceptors.response.use(
                 res => res,
                 error => {
@@ -28,11 +36,13 @@ const withErrorHandler = WrappedComponent => {
             );
         }
 
+        // Reject axios request on component unmount
         componentWillUnmount() {
             axios.interceptors.request.eject(this.reqInterceptors);
             axios.interceptors.response.eject(this.resInterceptors);
         }
 
+        // Remove error & Windos reload
         errorConfirmedHandler = () => {
             this.setState({ error: null });
             window.location.reload();

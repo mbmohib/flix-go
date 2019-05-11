@@ -90,6 +90,12 @@ class Hero extends Component {
             .catch(err => {})
     }
 
+    /**
+     * Chnage Slide index value on clicking
+     * next arrow button
+     *
+     * @memberof Hero
+     */
     handleNextSlide = () => {
         if (
             this.state.slideIndex <
@@ -103,6 +109,12 @@ class Hero extends Component {
         }
     };
 
+    /**
+     * Chnage Slide index value on clicking
+     * prev arrow button
+     *
+     * @memberof Hero
+     */
     handlePrevSlide = () => {
         if (this.state.slideIndex > 0) {
             this.setState(prevState => {
