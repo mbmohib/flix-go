@@ -8,7 +8,6 @@ const withInfiniteLoading = WrappedComponent => {
         };
 
         componentDidMount() {
-            console.log('Attach Scroll Event');
             window.addEventListener(
                 'scroll',
                 throttle(this.listenToScroll, 1000, {
@@ -19,7 +18,6 @@ const withInfiniteLoading = WrappedComponent => {
         }
 
         componentWillUnmount() {
-            console.log('Deattach Scroll Event');
             window.removeEventListener('scroll', this.listenToScroll);
         }
 
@@ -30,7 +28,6 @@ const withInfiniteLoading = WrappedComponent => {
          * @memberof withInfiniteLoading
          */
         listenToScroll = () => {
-            console.log('Scrolled');
             const winScroll =
                 document.body.scrollTop || document.documentElement.scrollTop;
 
@@ -43,7 +40,6 @@ const withInfiniteLoading = WrappedComponent => {
 
             // Check if user reach to near to end of the page
             if (scrolled > 0.8) {
-                console.log('User react to end');
                 this.setState(prevState => {
                     return {
                         currentPage: prevState.currentPage + 1
