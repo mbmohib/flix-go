@@ -1,92 +1,70 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import axios from '../axios';
 import SectionHeader from '../components/SectionHeader';
 import ListView from '../components/ListView';
 import Loader from '../components/style/Loader';
 import withErrorHandler from '../hoc/withErrorHandler';
 import withInfiniteLoading from '../hoc/withInfiniteLoading';
-
+import * as actions from '../store/actions/index';
 
 class RelatedMovies extends Component {
     state = {
-        movies: [],
-        totolPages: null,
-        sortValue: '',
-        genreIds: null,
-        loading: true
+        sortValue: ''
     };
 
     componentDidMount() {
-        // console.log('RelatedMovies: ComponentDidMount');
-        this.getMovies();
+        this.props.onFetchMovies(
+            this.props.movieId,
+            this.state.sortValue,
+            this.props.currentPage
+        );
     }
 
     componentDidUpdate(prevProps, prevState) {
-        // console.log('RelatedMovies: componentDidUpdate');
         if (prevState.sortValue !== this.state.sortValue) {
-            this.setState({ movies: [], loading: true, currentPage: 0 }, () => {
-                this.getMovies();
-            })
+            this.props.onFetchMovies(
+                this.props.movieId,
+                this.state.sortValue,
+                this.props.currentPage,
+                true
+            );
         }
 
         if (
             prevProps.currentPage !== this.props.currentPage &&
-            this.props.currentPage < this.state.totolPages
+            this.props.currentPage < this.props.totolPages
         ) {
-            this.getMovies();
+            // FIXME: Fix Related movies updated issue
+            // console.log('Changed currentPage', this.props.totolPages);
+            this.props.onFetchMovies(
+                this.props.movieId,
+                this.state.sortValue,
+                this.props.currentPage
+            );
+        }
+
+        if (prevProps.movieId !== this.props.movieId) {
+            // console.log('Changed MovieId');
+            this.props.onFetchMovies(
+                this.props.movieId,
+                this.state.sortValue,
+                this.props.currentPage,
+                true
+            );
         }
     }
 
-
-    getMovies() {
-        axios
-            .get(
-                `movie/${this.props.movieId}/similar?sort_by=${
-                    this.state.sortValue
-                }&page=${this.props.currentPage + 1}`
-            )
-            .then(res => {
-                const movies = [...this.state.movies, ...res.data.results]
-                this.setState({
-                    movies: movies,
-                    totolPages: res.data.total_pages,
-                    loading: false
-                });
-                window.addEventListener('scroll', this.listenToScroll);
-            })
-            .catch( err => {})
-    }
-
-    /** 
+    /**
      * Set sort value
      *
      * @memberof RelatedMovies
      */
     handleSortChange = event => {
-        if(event.target.value !== this.state.sortValue) {
-            this.setState({ sortValue: event.target.value, loading: true });
+        if (event.target.value !== this.state.sortValue) {
+            this.setState({ sortValue: event.target.value });
         }
     };
-
-    /** 
-     * Set filter data and query params
-     *
-     * @memberof RelatedMovies
-     */
-    submitDialog = (data) => {
-        // Format data into query params
-        const queryParams = [];
-        for (let i in data) {
-            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(data[i]))
-        }
-
-        // Set query params
-        this.props.history.push({
-            pathname: '/archive',
-            search: '?' + queryParams.join('&')
-        })
-    }
 
     render() {
         return (
@@ -95,16 +73,39 @@ class RelatedMovies extends Component {
                     title="Related Movies"
                     sortValue={this.state.sortValue}
                     handleSortChange={this.handleSortChange}
-                    submitDialog={this.submitDialog}
                 />
-                {this.setState.loading ? (
+                {this.props.movies.length <= 0 ? (
                     <Loader />
                 ) : (
-                    <ListView movies={this.state.movies} />
+                    <ListView movies={this.props.movies} />
                 )}
             </React.Fragment>
         );
     }
 }
 
-export default withErrorHandler(withInfiniteLoading(RelatedMovies));
+const mapStateToProps = state => {
+    return {
+        movies: state.relatedMovies,
+        totolPages: state.relatedMoviesTotalPages
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onFetchMovies: (id, sortValue, currentPage, emptyArray) =>
+            dispatch(
+                actions.fetchRelatedMovies(
+                    id,
+                    sortValue,
+                    currentPage,
+                    emptyArray
+                )
+            )
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withErrorHandler(withInfiniteLoading(RelatedMovies)));

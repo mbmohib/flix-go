@@ -4,7 +4,7 @@ import { throttle } from 'lodash';
 const withInfiniteLoading = WrappedComponent => {
     return class extends Component {
         state = {
-            currentPage: 0
+            currentPage: 1
         };
 
         componentDidMount() {

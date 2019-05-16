@@ -2,5 +2,7 @@ export {
     fetchNowPlayingMovies,
     fetchHighestRatedMovies,
     fetchUpcomingMovies,
-    fetchMovie
+    fetchMovie,
+    fetchRelatedMovies,
+    fetchArchiveMovies
 } from './movies';
