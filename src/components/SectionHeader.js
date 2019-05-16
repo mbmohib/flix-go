@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import { withRouter } from 'react-router-dom';
 
 import axios from '../axios';
 import FormFilter from './FormFilter';
@@ -106,12 +107,29 @@ class SectionHeader extends Component {
         }
     };
 
-    submitDialog = () => {
-        this.props.submitDialog({
+    /**
+     * Set query params & redirect to archive
+     *
+     * @memberof ListViewContainer
+     */
+    submitFilterDialog = () => {
+        const formData = {
             with_genres: this.state.genre,
             year: this.state.year,
             with_original_language: this.state.language
-        });
+        }
+        // Format data into query params
+        const queryParams = [];
+        for (let i in formData) {
+            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(formData[i]))
+        }
+
+        // Set query params
+        this.props.history.push({
+            pathname: '/archive',
+            search: '?' + queryParams.join('&')
+        })
+        
         this.handleDialog();
     };
 
@@ -185,7 +203,7 @@ class SectionHeader extends Component {
                             </Button>
                             <Button
                                 variant="contained"
-                                onClick={this.submitDialog}
+                                onClick={this.submitFilterDialog}
                                 color="primary"
                             >
                                 Apply Filter
@@ -198,4 +216,4 @@ class SectionHeader extends Component {
     }
 }
 
-export default SectionHeader;
+export default withRouter(SectionHeader);

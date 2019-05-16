@@ -1,22 +1,20 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import { connect } from 'react-redux';
 
 import axios from '../axios';
 import GridView from '../components/GridView';
 import withErrorHandler from '../hoc/withErrorHandler';
+import * as actions from '../store/actions/index';
 
-class GridViewContainer extends Component {
-    state = {
-        movies: null
-    };
+
+class UpcomingMovies extends Component {
 
     componentDidMount() {
-        console.log('GridView: ComponentDidMount');
-        this.getMovies();
+        this.props.onFetchMovies();
     }
 
     componentDidUpdate() {
-        console.log('GridView: ComponentDidUpdate');
         setTimeout(() => {
             // Handle nuke carousal bug on navigation
             window.dispatchEvent(new Event('resize'));
@@ -45,9 +43,25 @@ class GridViewContainer extends Component {
 
     render() {
         return (
-            <GridView title="Expected premiere" movies={this.state.movies} />
+            <GridView title="Expected premiere" movies={this.props.movies} />
         );
     }
 }
 
-export default withErrorHandler(GridViewContainer);
+const mapStateToProps = state => {
+    return {
+        movies: state.upcomingMovies
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onFetchMovies: () =>
+            dispatch(actions.fetchUpcomingMovies())
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withErrorHandler(UpcomingMovies));

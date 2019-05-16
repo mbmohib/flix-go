@@ -1,62 +1,45 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
-import axios from '../axios';
 import HeroDetails from '../components/HeroDetails';
 import RelatedMovies from './RelatedMovies';
 import Loader from '../components/style/Loader';
 import withErrorHandler from '../hoc/withErrorHandler';
+import * as actions from '../store/actions/index';
+
 
 const PreLoader = styled.div`
     height: 300px;
 `;
 
 class Details extends Component {
-    state = {
-        movie: null,
-        loading: true
-    };
 
     componentDidMount() {
-        // console.log('Details: ComponentDidMount');
-        this.getMovie();
+        this.props.onFetchMovie(this.props.match.params.id)
     }
 
     componentDidUpdate(prevProps) {
-        // console.log('Details: ComponentDidUpdate');
         if (prevProps.match.params.id !== this.props.match.params.id) {
-            this.setState({ loading: true })
-            this.getMovie();
+            this.props.onFetchMovie(this.props.match.params.id);
         }
-    }
 
-    /**
-     * Get Movies
-     *
-     * @memberof Details
-     */
-    getMovie() {
-        axios.get(`/movie/${this.props.match.params.id}`).then(res => {
-            this.setState({
-                movie: res.data,
-                loading: false
-            });
-
-            window.scrollTo(0, 0)
-        });
+        if(prevProps.movie !== this.props.movie) {
+            window.scrollTo(0, 0);
+        }
     }
 
     render() {
         return (
             <React.Fragment>
-                {!this.state.movie ? (
+                {!this.props.movie ? (
                     <PreLoader>
                         <Loader />
                     </PreLoader>
                 ) : (
-                    <HeroDetails movie={this.state.movie} />
+                    <HeroDetails movie={this.props.movie} />
                 )}
-                {this.state.movie && (
+                {this.props.movie && (
                     <RelatedMovies movieId={this.props.match.params.id} />
                 )}
             </React.Fragment>
@@ -64,4 +47,16 @@ class Details extends Component {
     }
 }
 
-export default withErrorHandler(Details);
+const mapStateToProps = state => {
+    return {
+        movie: state.movie
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onFetchMovie: (id) => dispatch(actions.fetchMovie(id))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Details));

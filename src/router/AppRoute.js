@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 
-import Layout from '../containers/Layout';
-import Home from '../containers/Home';
+import Layout from '../layouts/Layout';
+import Home from '../layouts/Home';
 import Details from '../containers/Details';
 import Archive from '../containers/Archive';
 import Genres from '../containers/Genres';

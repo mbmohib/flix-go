@@ -4,29 +4,29 @@ import Carousel from 'nuka-carousel';
 import ArrowForward from '@material-ui/icons/ArrowForward';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import moment from 'moment';
+import { connect } from 'react-redux';
 
-import axios from '../axios';
 import Title from '../components/style/Title';
 import Container from '../components/style/Container';
 import MovieGridView from '../components/MovieGridView';
 import Loader from '../components/style/Loader';
-import heroBg from '../images/hero-bg.jpg';
+import NowPlayingMoviesBg from '../images/hero-bg.jpg';
 import withErrorHandler from '../hoc/withErrorHandler';
+import * as actions from '../store/actions/index';
 
-const HeroWrapper = styled.div`
+const NowPlayingMoviesWrapper = styled.div`
     padding: 70px 0 40px;
     background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-        url(${heroBg});
+        url(${NowPlayingMoviesBg});
     background-position: center center;
     background-size: cover;
 `;
 
-const HeroContainer = styled.div`
+const NowPlayingMoviesContainer = styled.div`
     padding: 50px 0;
 `;
 
-const HeroHeader = styled.div`
+const NowPlayingMoviesHeader = styled.div`
     display: flex;
     justify-content: space-between;
 `;
@@ -51,55 +51,33 @@ const ArrowButton = styled(ButtonBase)`
     }
 `;
 
-class Hero extends Component {
+class NowPlayingMovies extends Component {
     state = {
         slidesToShow: 4,
         totalResult: 0,
         slideIndex: 0,
-        loading: true,
-        movies: []
     };
 
     componentDidMount() {
-        console.log('Hero: ComponentDidMount');
-        this.getMovies();
+        this.props.onFetchMovies();
     }
 
     componentDidUpdate() {
-        console.log('Hero: ComponentDidUpdate');
         setTimeout(() => {
             window.dispatchEvent(new Event('resize'));
         }, 0);
-    }
-
-    getMovies() {
-        const today = moment().format('YYYY-MM-DD');
-        const lastDate = moment().subtract(60, 'days').format('YYYY-MM-DD');
-
-        axios
-            .get(
-                `/discover/movie?primary_release_date.gte=${lastDate}&primary_release_date.lte=${today}&sort_by=revenue.desc`
-            )
-            .then(res => {
-                this.setState({
-                    movies: res.data.results,
-                    totalResult: res.data.results.length,
-                    loading: false
-                });
-            })
-            .catch(err => {})
     }
 
     /**
      * Chnage Slide index value on clicking
      * next arrow button
      *
-     * @memberof Hero
+     * @memberof NowPlayingMovies
      */
     handleNextSlide = () => {
         if (
             this.state.slideIndex <
-            this.state.totalResult - this.state.slidesToShow
+            this.props.movies.length - this.state.slidesToShow
         ) {
             this.setState(prevState => {
                 return {
@@ -113,7 +91,7 @@ class Hero extends Component {
      * Chnage Slide index value on clicking
      * prev arrow button
      *
-     * @memberof Hero
+     * @memberof NowPlayingMovies
      */
     handlePrevSlide = () => {
         if (this.state.slideIndex > 0) {
@@ -127,11 +105,11 @@ class Hero extends Component {
 
     render() {
         return (
-            <HeroWrapper>
+            <NowPlayingMoviesWrapper>
                 <Container>
-                    <HeroHeader>
+                    <NowPlayingMoviesHeader>
                         <Title transform="uppercase" color="#ffffff" highWeight>
-                            new grossing movies of this season
+                            now playing
                         </Title>
                         <CarouselControls>
                             <ArrowButton
@@ -151,10 +129,10 @@ class Hero extends Component {
                                 <ArrowForward />
                             </ArrowButton>
                         </CarouselControls>
-                    </HeroHeader>
+                    </NowPlayingMoviesHeader>
 
-                    <HeroContainer>
-                        {this.state.loading ? (
+                    <NowPlayingMoviesContainer>
+                        {!this.props.movies ? (
                             <Loader />
                         ) : (
                             <Carousel
@@ -165,8 +143,8 @@ class Hero extends Component {
                                     this.setState({ slideIndex })
                                 }
                             >
-                                {this.state.movies.length > 0 &&
-                                    this.state.movies.map(movie => (
+                                {this.props.movies.length > 0 &&
+                                    this.props.movies.map(movie => (
                                         <MovieGridView
                                             key={movie.id}
                                             movie={movie}
@@ -174,11 +152,23 @@ class Hero extends Component {
                                     ))}
                             </Carousel>
                         )}
-                    </HeroContainer>
+                    </NowPlayingMoviesContainer>
                 </Container>
-            </HeroWrapper>
+            </NowPlayingMoviesWrapper>
         );
     }
 }
 
-export default withErrorHandler(Hero);
+const mapStateToProps = state => {
+    return {
+        movies: state.nowPlayingmovies,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onFetchMovies: () => dispatch(actions.fetchNowPlayingMovies()),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(NowPlayingMovies));

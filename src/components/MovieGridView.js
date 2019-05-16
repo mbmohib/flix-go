@@ -10,6 +10,7 @@ import Rating from './Rating';
 
 const MoviePrimaryWrapper = styled(Link)`
     display: block;
+    margin-bottom: 30px;
 `;
 
 const MovieCover = styled.img`
